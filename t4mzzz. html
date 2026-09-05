@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T4MZZ Gaming Panel</title>
+
+<style>
+:root{
+  --bg:#05080d;
+  --panel:#0b1119;
+  --panel2:#0e1621;
+  --line:#1c2a38;
+  --text:#eef4f7;
+  --muted:#8d9aa7;
+  --green:#63e85b;
+  --purple:#9b5cff;
+  --blue:#36a8ff;
+  --yellow:#ffc52f;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:radial-gradient(circle at 80% 0%,#102319 0%,transparent 30%),var(--bg);
+  color:var(--text);
+}
+
+/* SIDEBAR */
+.sidebar{
+  position:fixed;
+  left:0;top:0;bottom:0;
+  width:235px;
+  background:#060b11;
+  border-right:1px solid var(--line);
+  padding:25px 16px;
+  overflow:auto;
+}
+
+.logo{
+  font-size:34px;
+  font-weight:900;
+  font-style:italic;
+  letter-spacing:-2px;
+}
+.logo span{color:var(--green)}
+.logo small{
+  display:block;
+  color:var(--green);
+  font-size:11px;
+  letter-spacing:1px;
+  margin-left:42px;
+}
+
+.profile{text-align:center;margin:35px 0 25px}
+.avatar{
+  width:90px;height:90px;
+  margin:auto;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-size:38px;
+  background:linear-gradient(135deg,#182635,#080d13);
+  border:2px solid var(--purple);
+  box-shadow:0 0 25px #8b45ff88;
+}
+.profile h3{margin-top:14px;color:var(--green)}
+.badge{
+  display:inline-block;
+  margin-top:8px;
+  padding:7px 12px;
+  background:#101923;
+  border-radius:8px;
+  font-size:12px;
+  color:#cbd5df;
+}
+
+.menu a{
+  display:flex;
+  gap:14px;
+  align-items:center;
+  padding:14px 13px;
+  margin:5px 0;
+  text-decoration:none;
+  color:#c7d0d9;
+  border-radius:9px;
+}
+.menu a:hover,.menu .active{
+  color:white;
+  background:linear-gradient(90deg,#174d27,#3b9f23);
+  box-shadow:0 0 15px #4bea4933;
+}
+.icon{width:20px;text-align:center}
+
+.help,.server{
+  margin-top:25px;
+  padding:18px;
+  background:linear-gradient(135deg,#08130f,#0a1118);
+  border:1px solid #173226;
+  border-radius:10px;
+}
+.help h4,.server h4{color:var(--green);font-size:13px}
+.help p,.server p{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7;
+  margin:10px 0;
+}
+.help button{
+  width:100%;
+  padding:11px;
+  color:var(--green);
+  background:transparent;
+  border:1px solid var(--green);
+  border-radius:7px;
+  cursor:pointer;
+}
+.online{color:var(--green)!important;font-weight:bold}
+
+/* MAIN */
+.main{
+  margin-left:235px;
+  min-height:100vh;
+}
+
+.topbar{
+  height:84px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 30px;
+  border-bottom:1px solid var(--line);
+  background:#070b11cc;
+  backdrop-filter:blur(10px);
+}
+.menu-btn{font-size:25px;color:#cdd6de}
+.userbox{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.notification{
+  position:relative;
+  font-size:22px;
+}
+.notification b{
+  position:absolute;
+  top:-10px;right:-10px;
+  background:#ff3434;
+  width:20px;height:20px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  font-size:10px;
+}
+.user{
+  padding:12px 17px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  color:#dce5ed;
+}
+
+.content{padding:30px;max-width:1400px;margin:auto}
+
+.hero{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  min-height:270px;
+  border-radius:14px;
+  overflow:hidden;
+  background:linear-gradient(110deg,#0d151d,#07110d 70%);
+  border:1px solid var(--line);
+}
+.hero-text{padding:38px}
+.hero h1{font-size:30px;margin-bottom:10px}
+.hero h1 span{color:var(--green)}
+.hero p{color:var(--muted)}
+
+.balance{
+  margin-top:35px;
+  width:310px;
+  max-width:100%;
+  padding:22px;
+  border-radius:13px;
+  background:#101820;
+  border:1px solid var(--line);
+}
+.balance small{color:#bdc7d0}
+.balance h2{color:var(--green);font-size:28px;margin:10px 0}
+.balance button{
+  padding:12px 16px;
+  border:0;border-radius:8px;
+  background:var(--green);
+  color:#07100a;
+  font-weight:bold;
+  cursor:pointer;
+}
+.balance .secondary{
+  background:transparent;
+  color:#d5dce2;
+  border:1px solid #34424f;
+  margin-left:8px;
+}
+
+.hero-art{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+  font-size:130px;
+  background:
+    radial-gradient(circle,#1d6d2d55,transparent 60%),
+    linear-gradient(135deg,transparent,#092414);
+}
+.hero-art::after{
+  content:"T4MZZ";
+  position:absolute;
+  bottom:25px;
+  right:30px;
+  font-size:42px;
+  font-weight:900;
+  font-style:italic;
+  color:white;
+  text-shadow:0 0 20px var(--green);
+}
+
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin:20px 0;
+}
+.stat{
+  padding:20px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:12px;
+}
+.stat .stat-icon{font-size:25px}
+.stat small{display:block;color:#b9c4cd;margin:8px 0}
+.stat h2{font-size:26px}
+.green{color:var(--green)}
+.purple{color:#c078ff}
+.blue{color:#65b8ff}
+.yellow{color:var(--yellow)}
+
+/* BOX */
+.box{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:20px;
+  margin-top:20px;
+}
+.box-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+.box-title h2{font-size:19px}
+.box-title p{font-size:13px;color:var(--muted);margin-top:5px}
+.view-btn{
+  padding:9px 15px;
+  color:var(--green);
+  background:transparent;
+  border:1px solid #276637;
+  border-radius:7px;
+}
+
+/* TOPUP */
+.topup-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:10px;
+}
+.topup{
+  padding:22px 8px;
+  text-align:center;
+  border:1px solid #263541;
+  border-radius:9px;
+  background:#0a1017;
+  color:#d9e1e7;
+  cursor:pointer;
+}
+.topup:hover,.topup.active{
+  border-color:var(--green);
+  box-shadow:0 0 15px #58e85433;
+  color:var(--green);
+}
+
+/* PRODUCTS */
+.products{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+}
+.product{
+  text-align:center;
+  padding:20px 12px;
+  background:#0a1017;
+  border:1px solid #263541;
+  border-radius:10px;
+  transition:.2s;
+}
+.product:hover{
+  transform:translateY(-4px);
+  border-color:var(--green);
+}
+.product .emoji{font-size:48px;margin:8px}
+.product h3{font-size:13px;margin:10px 0}
+.product small{color:var(--muted)}
+.price{color:var(--green);font-weight:bold;margin-top:10px}
+
+/* TABLE */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:700px}
+th,td{
+  text-align:left;
+  padding:16px 8px;
+  border-bottom:1px solid #1b2833;
+  color:#b9c4cd;
+  font-size:13px;
+}
+th{color:#7f8d99;font-weight:normal}
+.status{
+  padding:7px 11px;
+  border-radius:6px;
+  display:inline-block;
+  font-size:12px;
+}
+.done{background:#0c2915;color:#62e873;border:1px solid #1d592c}
+.process{background:#091d2c;color:#5ebaff;border:1px solid #174e76}
+
+footer{
+  padding:35px 30px;
+  color:#71808c;
+  border-top:1px solid var(--line);
+  margin-top:30px;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  .sidebar{
+    width:70px;
+    padding:18px 8px;
+  }
+  .sidebar .logo small,
+  .profile h3,.badge,
+  .menu a span:not(.icon),
+  .help,.server{display:none}
+  .logo{font-size:20px;text-align:center}
+  .profile{margin:25px 0}
+  .avatar{width:48px;height:48px;font-size:22px}
+  .menu a{justify-content:center;padding:14px}
+  .main{margin-left:70px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .products{grid-template-columns:repeat(2,1fr)}
+  .topup-grid{grid-template-columns:repeat(3,1fr)}
+}
+
+@media(max-width:650px){
+  .content{padding:15px}
+  .topbar{padding:0 15px}
+  .user{display:none}
+  .hero{grid-template-columns:1fr}
+  .hero-art{height:180px;font-size:80px}
+  .hero-text{padding:25px}
+  .balance{margin-top:25px}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat{padding:15px}
+  .topup-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+  <div class="logo">T4<span>MZZ</span><small>GAMING PANEL</small></div>
+
+  <div class="profile">
+    <div class="avatar">🎮</div>
+    <h3>T4MZZ</h3>
+    <div class="badge">🛡 Admin</div>
+  </div>
+
+  <nav class="menu">
+    <a href="#" class="active"><span class="icon">⌂</span><span>Dashboard</span></a>
+    <a href="#topup"><span class="icon">💎</span><span>Top Up</span></a>
+    <a href="#layanan"><span class="icon">🎮</span><span>Layanan</span></a>
+    <a href="#pesanan"><span class="icon">📋</span><span>Pesanan Saya</span></a>
+    <a href="#"><span class="icon">↻</span><span>Riwayat Transaksi</span></a>
+    <a href="#"><span class="icon">👥</span><span>Afiliasi</span></a>
+    <a href="#"><span class="icon">⚙</span><span>Pengaturan</span></a>
+    <a href="#"><span class="icon">⌘</span><span>API Dokumentasi</span></a>
+    <a href="#"><span class="icon">⇥</span><span>Logout</span></a>
+  </nav>
+
+  <div class="help">
+    <h4>BUTUH BANTUAN?</h4>
+    <p>Hubungi Admin kami di WhatsApp.</p>
+    <button onclick="contactAdmin()">☏ KONTAK ADMIN</button>
+  </div>
+
+  <div class="server">
+    <h4>SERVER STATUS</h4>
+    <p class="online">● ONLINE</p>
+    <p>Semua sistem berjalan normal.</p>
+  </div>
+</aside>
+
+<main class="main">
+
+  <header class="topbar">
+    <div class="menu-btn">☰</div>
+    <div class="userbox">
+      <div class="notification">♧<b>3</b></div>
+      <div class="user">🎮 T4MZZ　⌄</div>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Selamat Datang, <span>T4MZZ!</span></h1>
+        <p>Kelola akun dan layanan gamingmu di sini.</p>
+
+        <div class="balance">
+          <small>Saldo Anda</small>
+          <h2>Rp 250.000</h2>
+          <button onclick="showMessage('Fitur top up saldo dipilih')">＋ Top Up Saldo</button>
+          <button class="secondary">↕ Riwayat</button>
+        </div>
+      </div>
+
+      <div class="hero-art">🥷</div>
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="stat-icon green">📥</div>
+        <small>Total Pesanan</small>
+        <h2>128</h2>
+        <span class="green">Pesanan</span>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon purple">🛒</div>
+        <small>Pesanan Selesai</small>
+        <h2>118</h2>
+        <span class="purple">Pesanan</span>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon blue">◷</div>
+        <small>Dalam Proses</small>
+        <h2>10</h2>
+        <span class="blue">Pesanan</span>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon yellow">✖</div>
+        <small>Dibatalkan</small>
+        <h2>0</h2>
+        <span class="yellow">Pesanan</span>
+      </div>
+    </section>
+
+    <section class="box" id="topup">
+      <div class="box-title">
+        <div>
+          <h2>Top Up Saldo</h2>
+          <p>Pilih nominal top-up yang tersedia</p>
+        </div>
+        <button class="view-btn">TOP UP</button>
+      </div>
+
+      <div class="topup-grid">
+        <div class="topup" onclick="selectTopup(this,'Rp 10.000')">Rp 10.000</div>
+        <div class="topup active" onclick="selectTopup(this,'Rp 20.000')">Rp 20.000<br><small>POPULAR</small></div>
+        <div class="topup" onclick="selectTopup(this,'Rp 50.000')">Rp 50.000</div>
+        <div class="topup" onclick="selectTopup(this,'Rp 100.000')">Rp 100.000</div>
+        <div class="topup" onclick="selectTopup(this,'Rp 200.000')">Rp 200.000</div>
+        <div class="topup" onclick="selectTopup(this,'Rp 500.000')">Rp 500.000</div>
+      </div>
+    </section>
+
+    <section class="box" id="layanan">
+      <div class="box-title">
+        <h2>Produk / Layanan</h2>
+        <button class="view-btn">Lihat Semua</button>
+      </div>
+
+      <div class="products">
+        <div class="product"><div class="emoji">💎</div><h3>Diamond Game</h3><small>Mulai dari</small><div class="price">Rp 1.100</div></div>
+        <div class="product"><div class="emoji">🟨</div><h3>Membership Mingguan</h3><small>Mulai dari</small><div class="price">Rp 27.500</div></div>
+        <div class="product"><div class="emoji">🎫</div><h3>Membership Bulanan</h3><small>Mulai dari</small><div class="price">Rp 81.000</div></div>
+        <div class="product"><div class="emoji">⭐</div><h3>Level Up Pass</h3><small>Mulai dari</small><div class="price">Rp 61.000</div></div>
+        <div class="product"><div class="emoji">🎟️</div><h3>Custom Room Card</h3><small>Mulai dari</small><div class="price">Rp 9.500</div></div>
+      </div>
+    </section>
+
+    <section class="box" id="pesanan">
+      <div class="box-title">
+        <h2>Riwayat Transaksi Terakhir</h2>
+        <button class="view-btn">Lihat Semua</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID Pesanan</th>
+              <th>Produk</th>
+              <th>Tanggal</th>
+              <th>Status</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>#T4MZZ-1288</td>
+              <td>💎 Diamond Game</td>
+              <td>05 Sep 2026, 20:15</td>
+              <td><span class="status done">● Selesai</span></td>
+              <td>Rp 15.400</td>
+            </tr>
+            <tr>
+              <td>#T4MZZ-1287</td>
+              <td>🟨 Membership Mingguan</td>
+              <td>05 Sep 2026, 19:48</td>
+              <td><span class="status done">● Selesai</span></td>
+              <td>Rp 27.500</td>
+            </tr>
+            <tr>
+              <td>#T4MZZ-1286</td>
+              <td>🎟️ Custom Room Card</td>
+              <td>05 Sep 2026, 18:32</td>
+              <td><span class="status process">◉ Dalam Proses</span></td>
+              <td>Rp 9.500</td>
+            </tr>
+            <tr>
+              <td>#T4MZZ-1285</td>
+              <td>💎 Diamond Game</td>
+              <td>05 Sep 2026, 17:20</td>
+              <td><span class="status done">● Selesai</span></td>
+              <td>Rp 8.200</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    © 2026 <span class="green">T4MZZ Gaming Panel</span>. All Rights Reserved.
+  </footer>
+
+</main>
+
+<script>
+const whatsappAdmin = "6283878548872";
+
+function contactAdmin() {
+  const text = encodeURIComponent("Halo Admin T4MZZ, saya membutuhkan bantuan.");
+  window.open("https://wa.me/" + whatsappAdmin + "?text=" + text, "_blank");
+}
+
+function selectTopup(element, nominal) {
+  document.querySelectorAll(".topup").forEach(item => {
+    item.classList.remove("active");
+  });
+
+  element.classList.add("active");
+  showMessage("Nominal dipilih: " + nominal);
+}
+
+function showMessage(message) {
+  alert(message);
+}
+</script>
+
+</body>
+</html>
