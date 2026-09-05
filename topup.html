@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T4MZZ TOP UP</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#0d0718;
+  color:white;
+}
+header{
+  padding:20px;
+  background:#160b29;
+  text-align:center;
+  font-size:24px;
+  font-weight:bold;
+}
+header span{color:#b45cff}
+
+.hero{
+  text-align:center;
+  padding:45px 20px;
+  background:linear-gradient(135deg,#1c0c38,#32115e);
+}
+.hero h1{margin:0;font-size:32px}
+.hero p{color:#d5c4e8}
+
+.container{
+  max-width:650px;
+  margin:auto;
+  padding:20px;
+}
+
+.form{
+  background:#171020;
+  border:1px solid #713bb2;
+  border-radius:16px;
+  padding:20px;
+}
+
+label{
+  display:block;
+  margin-top:15px;
+  margin-bottom:7px;
+}
+
+input,select{
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  border:1px solid #65399c;
+  background:#0d0914;
+  color:white;
+  font-size:16px;
+}
+
+button{
+  width:100%;
+  padding:16px;
+  margin-top:20px;
+  border:none;
+  border-radius:10px;
+  background:#a855f7;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+}
+
+#payment{
+  display:none;
+  text-align:center;
+  margin-top:25px;
+  background:#171020;
+  padding:20px;
+  border-radius:16px;
+  border:1px solid #713bb2;
+}
+
+#payment img{
+  width:100%;
+  max-width:280px;
+  border-radius:12px;
+  margin:15px auto;
+}
+
+.nominal-info{
+  color:#d7b7ff;
+  margin-top:10px;
+}
+
+.note{
+  font-size:13px;
+  color:#aaa;
+  line-height:1.5;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  T4MZZ <span>TOP UP</span>
+</header>
+
+<section class="hero">
+  <h1>TOP UP GAME</h1>
+  <p>Masukkan data dan lakukan pembayaran dengan QRIS.</p>
+</section>
+
+<div class="container">
+
+<div class="form">
+
+<h2>🎮 Form Top Up</h2>
+
+<label>UID / ID Pemain</label>
+<input id="uid" placeholder="Masukkan UID pemain">
+
+<label>Nomor WhatsApp</label>
+<input id="wa" type="tel" placeholder="08xxxxxxxxxx">
+
+<label>Nominal Top Up</label>
+<select id="nominal">
+<option value="">-- Pilih Nominal --</option>
+<option value="500">Rp 500</option>
+<option value="1000">Rp 1.000</option>
+<option value="2000">Rp 2.000</option>
+<option value="5000">Rp 5.000</option>
+<option value="10000">Rp 10.000</option>
+<option value="20000">Rp 20.000</option>
+<option value="50000">Rp 50.000</option>
+<option value="100000">Rp 100.000</option>
+<option value="200000">Rp 200.000</option>
+<option value="500000">Rp 500.000</option>
+<option value="1000000">Rp 1.000.000</option>
+<option value="2000000">Rp 2.000.000</option>
+<option value="5000000">Rp 5.000.000</option>
+<option value="10000000">Rp 10.000.000</option>
+</select>
+
+<label>Atau Nominal Sendiri</label>
+<input
+type="number"
+id="custom"
+min="500"
+max="10000000"
+placeholder="Minimal Rp500 - Maksimal Rp10.000.000"
+>
+
+<button onclick="buatPesanan()">
+LANJUTKAN KE PEMBAYARAN
+</button>
+
+<p class="note">
+⚠️ Jangan pernah masukkan password atau kode OTP akun game.
+</p>
+
+</div>
+
+<div id="payment">
+
+<h2>💳 Pembayaran QRIS</h2>
+
+<p id="detailPesanan"></p>
+
+<!-- GANTI qris.png DENGAN GAMBAR QRIS RESMI -->
+<img src="qris.png" alt="QRIS Pembayaran">
+
+<p>
+Silakan scan QRIS di atas dan bayar sesuai nominal pesanan.
+</p>
+
+<button onclick="kirimBukti()">
+📸 KIRIM BUKTI PEMBAYARAN KE WHATSAPP
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let pesanan = {};
+
+function buatPesanan(){
+
+const uid=document.getElementById("uid").value.trim();
+const wa=document.getElementById("wa").value.trim();
+
+const pilihan=document.getElementById("nominal").value;
+const custom=document.getElementById("custom").value;
+
+const nominal=custom || pilihan;
+
+if(!uid){
+alert("Masukkan UID!");
+return;
+}
+
+if(!wa){
+alert("Masukkan nomor WhatsApp!");
+return;
+}
+
+if(!nominal){
+alert("Pilih atau masukkan nominal!");
+return;
+}
+
+if(Number(nominal)<500 || Number(nominal)>10000000){
+alert("Nominal harus Rp500 sampai Rp10.000.000!");
+return;
+}
+
+pesanan={
+uid:uid,
+wa:wa,
+nominal:nominal
+};
+
+document.getElementById("detailPesanan").innerHTML=
+"🆔 UID: <b>"+uid+"</b><br><br>"+
+"💰 Nominal: <b>Rp "+Number(nominal).toLocaleString("id-ID")+"</b>";
+
+document.getElementById("payment").style.display="block";
+
+document.getElementById("payment").scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+function kirimBukti(){
+
+const nomorAdmin="6283878548872";
+
+const pesan=encodeURIComponent(
+"🎮 *KONFIRMASI TOP UP* 🎮\\n\\n"+
+"🆔 UID: "+pesanan.uid+"\\n"+
+"💰 Nominal: Rp "+Number(pesanan.nominal).toLocaleString("id-ID")+"\\n"+
+"📱 WhatsApp: "+pesanan.wa+"\\n\\n"+
+"📸 Saya akan mengirim bukti pembayaran setelah pesan ini."
+);
+
+window.open(
+"https://wa.me/"+nomorAdmin+"?text="+pesan,
+"_blank"
+);
+
+}
+
+</script>
+
+</body>
+</html>
