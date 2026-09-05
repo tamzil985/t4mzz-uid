@@ -1,0 +1,7 @@
+<script>
+const harga = localStorage.getItem("hargaUID") || 20000;
+
+document.querySelectorAll(".harga").forEach(function(item) {
+  item.innerText = "Rp " + Number(harga).toLocaleString("id-ID");
+});
+</script>
