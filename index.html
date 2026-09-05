@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>T4MZZ UID STORE</title>
+<style>
+:root{--bg:#070611;--panel:#10101d;--line:#7d32b9;--purple:#a855f7;--text:#f5f1ff;--muted:#aaa4b8}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:radial-gradient(circle at top,#1b1031 0,#070611 42%);color:var(--text)}
+header{height:78px;border-bottom:1px solid #312044;display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;background:#090814e8;backdrop-filter:blur(10px);z-index:5}
+.logo{font-size:28px;font-weight:900;letter-spacing:1px}.logo span{color:var(--purple)} nav a{color:#ddd;text-decoration:none;margin:0 14px;font-weight:bold}.wa{border:1px solid var(--purple);padding:12px 18px;border-radius:12px;color:white;text-decoration:none}
+main{padding:45px 5%}.title{font-size:42px;font-weight:900;margin:0}.title span{color:var(--purple)}.sub{color:var(--muted);font-size:18px}
+.tools{display:flex;justify-content:space-between;gap:20px;align-items:center;margin:28px 0;flex-wrap:wrap}.filters{display:flex;gap:10px;flex-wrap:wrap}.filter{background:#11101d;color:#ddd;border:1px solid #322744;padding:10px 18px;border-radius:9px;cursor:pointer}.filter.active{background:var(--purple);color:white}.search{background:#0c0b17;border:1px solid #5d2b86;border-radius:10px;color:white;padding:13px 15px;width:280px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}.card{background:linear-gradient(145deg,#11101d,#0b0a15);border:1px solid #59217f;border-radius:16px;overflow:hidden;padding-bottom:18px}.photo{width:100%;height:220px;object-fit:cover;background:#171525}.content{padding:16px}.badge{display:inline-block;padding:7px 13px;border-radius:20px;font-size:12px;font-weight:bold;background:#24446c}.rare{background:#6e2ca3}.epic{background:#e87c12}.name{font-size:20px;font-weight:bold;margin:16px 0 8px}.price{font-size:25px;color:#bc6cff;font-weight:bold;margin-bottom:15px}.buy{display:block;text-align:center;text-decoration:none;color:white;border:1px solid var(--purple);padding:13px;border-radius:10px;font-weight:bold}
+.empty{grid-column:1/-1;text-align:center;padding:50px;color:var(--muted)}.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;margin-top:45px}.feature{border:1px solid #2c2340;background:#0e0d19;padding:20px;border-radius:14px}.feature h3{margin:0 0 8px;color:#d6a4ff}.feature p{margin:0;color:var(--muted)}
+footer{text-align:center;color:#777;padding:35px;border-top:1px solid #1e172c;margin-top:40px}
+.admin-link{font-size:12px;color:#6d5a80;text-decoration:none}
+@media(max-width:700px){nav{display:none}.title{font-size:32px}.search{width:100%}.tools{align-items:stretch}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">T4MZZ <span>UID</span></div>
+  <nav><a href="#">HOME</a><a href="#katalog">KATALOG</a><a href="#cara">CARA BELI</a></nav>
+  <a class="wa" href="https://wa.me/6283878548872" target="_blank">💬 6283878548872</a>
+</header>
+<main id="katalog">
+  <h1 class="title">KATALOG <span>UID</span></h1>
+  <p class="sub">Pilih UID terbaik dengan harga terjangkau</p>
+  <div class="tools">
+    <div class="filters">
+      <button class="filter active" data-cat="SEMUA">SEMUA</button>
+      <button class="filter" data-cat="BASIC">BASIC</button>
+      <button class="filter" data-cat="RARE">RARE</button>
+      <button class="filter" data-cat="EPIC">EPIC</button>
+    </div>
+    <input id="search" class="search" placeholder="Cari UID...">
+  </div>
+  <div id="products" class="grid"></div>
+
+  <div class="features" id="cara">
+    <div class="feature"><h3>🛡 AMAN & TERPERCAYA</h3><p>Produk dapat diatur dan diperbarui oleh admin.</p></div>
+    <div class="feature"><h3>⚡ PROSES CEPAT</h3><p>Pembelian langsung menghubungi WhatsApp admin.</p></div>
+    <div class="feature"><h3>🎧 24/7 SUPPORT</h3><p>Admin siap membantu pelanggan.</p></div>
+    <div class="feature"><h3>🏷 HARGA TERBAIK</h3><p>Harga dapat diubah kapan saja melalui panel admin.</p></div>
+  </div>
+</main>
+<footer>© 2026 T4MZZ UID STORE · <a class="admin-link" href="admin.html">Admin</a></footer>
+
+<script>
+const WA="6283878548872";
+const defaults=[
+ {id:1,name:"3L_GOIB",price:10000,category:"BASIC",image:"assets/uid-1.jpg"},
+ {id:2,name:"TAMZZ9999",price:15000,category:"BASIC",image:"assets/uid-2.jpg"},
+ {id:3,name:"TAMZ99999",price:50000,category:"RARE",image:"assets/uid-3.jpg"},
+ {id:4,name:"TAMZZ9999",price:100000,category:"EPIC",image:"assets/uid-4.jpg"},
+ {id:5,name:"TaMZZ09999",price:150000,category:"EPIC",image:"assets/uid-5.jpg"}
+];
+if(!localStorage.getItem("t4mzzProducts")) localStorage.setItem("t4mzzProducts",JSON.stringify(defaults));
+let category="SEMUA";
+function getProducts(){return JSON.parse(localStorage.getItem("t4mzzProducts")||"[]")}
+function rupiah(n){return "Rp "+Number(n).toLocaleString("id-ID")}
+function render(){
+ const q=document.getElementById("search").value.toLowerCase();
+ let items=getProducts().filter(p=>(category==="SEMUA"||p.category===category)&&p.name.toLowerCase().includes(q));
+ const box=document.getElementById("products");
+ if(!items.length){box.innerHTML='<div class="empty">Belum ada produk yang cocok.</div>';return}
+ box.innerHTML=items.map(p=>`<article class="card">
+   <img class="photo" src="${p.image}" alt="${p.name}">
+   <div class="content">
+     <span class="badge ${p.category.toLowerCase()}">${p.category}</span>
+     <div class="name">${p.name}</div>
+     <div class="price">${rupiah(p.price)}</div>
+     <a class="buy" target="_blank" href="https://wa.me/${WA}?text=${encodeURIComponent('Halo Admin, saya ingin membeli '+p.name+' dengan harga '+rupiah(p.price))}">💬 BELI SEKARANG</a>
+   </div></article>`).join("");
+}
+document.querySelectorAll(".filter").forEach(b=>b.onclick=()=>{document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));b.classList.add("active");category=b.dataset.cat;render()});
+document.getElementById("search").oninput=render; render();
+</script>
+</body></html>
