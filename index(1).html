@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOPUPKU — Top Up Game</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#0b1020;color:#fff}
+header{padding:18px 7%;display:flex;justify-content:space-between;align-items:center;background:#111936;position:sticky;top:0}
+.logo{font-size:22px;font-weight:800;color:#ffd54a}.logo span{color:#fff}
+nav a{color:#d9def0;text-decoration:none;margin-left:16px}
+.hero{padding:70px 7%;text-align:center;background:linear-gradient(135deg,#172554,#4c1d95)}
+.hero h1{font-size:38px;margin:0 0 12px}.hero p{color:#d9def0;max-width:650px;margin:auto}
+section{padding:42px 7%}.title{text-align:center;font-size:27px;margin-bottom:26px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{background:#141c35;border:1px solid #28345b;border-radius:16px;padding:22px}
+.card h3{margin-top:0}.price{font-size:22px;color:#ffd54a;font-weight:bold}
+button{width:100%;border:0;border-radius:10px;padding:13px;background:#ffd54a;color:#171717;font-weight:bold;font-size:15px;cursor:pointer}
+.form{max-width:620px;margin:auto;background:#141c35;padding:24px;border-radius:16px}
+input,select{width:100%;padding:14px;margin:8px 0 16px;border-radius:9px;border:1px solid #39456c;background:#0c1225;color:#fff}
+.note{font-size:13px;color:#aeb8d6;line-height:1.5}
+footer{text-align:center;padding:25px;background:#070b16;color:#aeb8d6}
+.badge{display:inline-block;background:#26345f;color:#b9c9ff;padding:6px 10px;border-radius:999px;font-size:12px;margin-bottom:10px}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">TOPUP<span>KU</span></div>
+  <nav><a href="#produk">Produk</a><a href="#order">Pesan</a></nav>
+</header>
+
+<div class="hero">
+  <div class="badge">Website Demo Toko Digital</div>
+  <h1>Top Up Game Cepat & Mudah</h1>
+  <p>Pilih nominal, masukkan ID pemain, lalu lanjutkan pesanan melalui kontak pembayaran yang kamu sediakan.</p>
+</div>
+
+<section id="produk">
+<h2 class="title">Produk Free Fire</h2>
+<div class="grid">
+  <div class="card"><h3>💎 70 Diamond</h3><p class="price">Rp 10.000</p><button onclick="pilih('70 Diamond')">Pilih</button></div>
+  <div class="card"><h3>💎 140 Diamond</h3><p class="price">Rp 20.000</p><button onclick="pilih('140 Diamond')">Pilih</button></div>
+  <div class="card"><h3>💎 355 Diamond</h3><p class="price">Rp 50.000</p><button onclick="pilih('355 Diamond')">Pilih</button></div>
+  <div class="card"><h3>💎 720 Diamond</h3><p class="price">Rp 100.000</p><button onclick="pilih('720 Diamond')">Pilih</button></div>
+</div>
+</section>
+
+<section id="order">
+<h2 class="title">Buat Pesanan</h2>
+<div class="form">
+<label>Produk</label>
+<select id="produk">
+<option>70 Diamond</option><option>140 Diamond</option><option>355 Diamond</option><option>720 Diamond</option>
+<option>Listing UID/Akun (jika diizinkan)</option>
+</select>
+<label>ID Pemain / UID</label>
+<input id="uid" placeholder="Masukkan UID pemain">
+<label>Nomor WhatsApp</label>
+<input id="wa" placeholder="08xxxxxxxxxx">
+<button onclick="pesan()">Lanjutkan Pesanan</button>
+<p class="note">Catatan: Jangan meminta password atau kode OTP pelanggan. Untuk jual-beli akun/UID, pastikan aktivitas tersebut sesuai aturan game/platform dan hukum yang berlaku.</p>
+</div>
+</section>
+
+<footer>© 2026 TOPUPKU — Website toko digital</footer>
+
+<script>
+function pilih(nama){
+ document.querySelector('#produk').value=nama;
+ document.querySelector('#order').scrollIntoView({behavior:'smooth'});
+}
+function pesan(){
+ const produk=document.querySelector('#produk').value;
+ const uid=document.querySelector('#uid').value.trim();
+ const wa=document.querySelector('#wa').value.trim();
+ if(!uid||!wa){alert('Isi UID dan nomor WhatsApp terlebih dahulu.');return;}
+ const text=encodeURIComponent(`Halo, saya ingin memesan ${produk}%0AUID: ${uid}%0ANomor: ${wa}`);
+ // Ganti nomor di bawah dengan nomor WhatsApp toko kamu (format 62...)
+ const nomor='6280000000000';
+ window.open(`https://wa.me/${nomor}?text=${text}`,'_blank');
+}
+</script>
+</body>
+</html>
